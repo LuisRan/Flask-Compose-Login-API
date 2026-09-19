@@ -84,24 +84,24 @@ TODO: escribe 2 o 3 líneas por concepto, con tus palabras.
 
 | Instrucción | Qué hace |
 |---|---|
-| `FROM python:3.12-slim` | TODO |
-| `WORKDIR /app` | TODO |
-| `COPY requirements.txt .` | TODO |
-| `RUN pip install --no-cache-dir -r requirements.txt` | TODO |
-| `COPY . .` | TODO |
-| `EXPOSE 5000` | TODO |
-| `CMD ["gunicorn", ...]` | TODO |
+| `FROM python:3.12-slim` | Parte de una imagen oficial de Python 3.12 en versión ligera (slim). Es la base sobre la que se construye mi imagen. |
+| `WORKDIR /app` | Define `/app` como carpeta de trabajo dentro del contenedor. Los siguientes comandos se ejecutan ahí. |
+| `COPY requirements.txt .` | Copia solo la lista de dependencias. Se hace antes que el resto del código para que Docker reutilice la caché y no reinstale todo cuando cambio `app.py`. |
+| `RUN pip install --no-cache-dir -r requirements.txt` | Instala Flask, SQLAlchemy, bcrypt, PyJWT y gunicorn. `--no-cache-dir` evita guardar archivos temporales y deja la imagen más pequeña. |
+| `COPY . .` | Copia el código del backend (`app.py`, etc.) dentro de la imagen. |
+| `EXPOSE 5000` | Documenta que la aplicación escucha en el puerto 5000 del contenedor. La publicación real al equipo se hace en el compose. |
+| `CMD ["gunicorn", ...]` | Comando con el que arranca el contenedor: gunicorn sirve la app `app:app` en `0.0.0.0:5000` con 1 worker. Uso `0.0.0.0` para que se pueda acceder desde fuera del contenedor. |
 
 ### docker-compose.yml línea por línea
 
 | Línea | Qué hace |
 |---|---|
-| `services: api:` | TODO |
-| `build: .` | TODO |
-| `ports: "5000:5000"` | TODO |
-| `environment:` | TODO |
-| `volumes: api_data:/data` | TODO |
-| `restart: unless-stopped` | TODO |
+| `services: api:` | Declara un servicio llamado `api`, que es mi backend. |
+| `build: .` | Construye la imagen usando el Dockerfile de esta misma carpeta. |
+| `ports: "5000:5000"` | Conecta el puerto 5000 de mi computadora con el 5000 del contenedor. Por eso la API se abre en `localhost:5000`. |
+| `environment:` | Pasa variables al contenedor (`JWT_SECRET` y `TOKEN_HOURS`). Si no las defino, se usan valores por defecto y la llave se genera sola. |
+| `volumes: api_data:/data` | Guarda `/data` (la base de datos y la llave JWT) en un volumen de Docker, para que no se pierda si el contenedor se recrea. |
+| `restart: unless-stopped` | Reinicia el contenedor si se cae, salvo que yo lo detenga manualmente. |
 
 ### Endpoints
 
