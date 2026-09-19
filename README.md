@@ -169,6 +169,8 @@ Errores:
 2. Abrir `Android/FlaskLogin` con Android Studio (JDK 17 o 21) y esperar el Gradle sync.
 3. Ejecutar en un emulador (Run ▶).
 
+> Si Android Studio marca *Incompatible Gradle JVM version*, ir a Settings → Build Tools → Gradle y elegir **Gradle JDK: jbr-21** (o 17). El backend debe estar corriendo antes de abrir la app.
+
 **URL base:** se define en `Android/FlaskLogin/app/build.gradle.kts`:
 
 ```kotlin
