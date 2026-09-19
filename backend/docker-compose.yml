@@ -1,17 +1,14 @@
-version: '3.8'
-
 services:
-  web:
-    # Construir usando el Dockerfile del directorio actual (.)
+  api:
     build: .
-    container_name: flask_login_backend
-    
-    # Mapeo de puertos: Puerto PC : Puerto Contenedor
     ports:
       - "5000:5000"
-    
-    # Volúmenes: Sincroniza tu carpeta actual con /app en el contenedor.
-    # Esto permite que si cambias el código en tu PC, se actualice en Docker
-    # sin tener que reconstruir la imagen (gracias al debug=True de Flask).
+    environment:
+      - JWT_SECRET=${JWT_SECRET:-}
+      - TOKEN_HOURS=${TOKEN_HOURS:-2}
     volumes:
-      - .:/app
+      - api_data:/data
+    restart: unless-stopped
+
+volumes:
+  api_data:

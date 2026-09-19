@@ -1,0 +1,6 @@
+.env
+__pycache__/
+*.db
+instance/
+.jwt_secret
+.DS_Store
