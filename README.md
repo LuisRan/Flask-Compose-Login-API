@@ -73,12 +73,12 @@ Este proyecto parte del repositorio de ejemplo [gabrielhuav/Flask-Compose-Login-
 
 TODO: escribe 2 o 3 líneas por concepto, con tus palabras.
 
-- **Docker:** TODO
-- **Imagen y contenedor:** TODO
-- **Dockerfile:** TODO
-- **docker-compose.yml:** TODO
-- **Backend / servicio REST:** TODO
-- **ORM y base de datos:** TODO
+- **Docker:** Es una herramienta que mete mi aplicación con todo lo que necesita (Python, librerías, configuración) dentro de una caja aislada llamada contenedor. Así funciona igual en mi Mac que en la computadora del profesor, sin instalar nada más que Docker.
+- **Imagen y contenedor:** La imagen es la plantilla con la que se construye todo, como una receta ya terminada y que no cambia. El contenedor es esa receta ya corriendo. Si el contenedor se borra, se pierde lo que tenía adentro, por eso la base de datos se guarda en un volumen.
+- **Dockerfile:** Es un archivo de texto con los pasos para construir la imagen de mi backend: partir de una imagen de Python, copiar el código, instalar las dependencias y definir con qué comando arranca el servidor.
+- **docker-compose.yml:** Es un archivo que describe cómo debe levantarse mi aplicación: qué servicio construir, qué puerto abrir, qué variables usar y qué volumen conectar. Con `docker compose up --build` se hace todo con un solo comando.
+- **Backend / servicio REST:** Es el programa que corre en el servidor y que la app móvil consulta por HTTP. Recibe peticiones (GET, POST, PUT, DELETE), valida los datos, lee o guarda en la base de datos y responde en JSON con un código de estado como 200, 201, 401 o 404.
+- **ORM y base de datos:** El ORM (aquí SQLAlchemy) me deja trabajar las tablas como si fueran clases de Python, sin escribir SQL a mano. La base de datos es SQLite, que guarda todo en un solo archivo dentro del volumen de Docker.
 
 ### Dockerfile línea por línea
 
