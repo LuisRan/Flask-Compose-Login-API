@@ -71,7 +71,7 @@ Este proyecto parte del repositorio de ejemplo [gabrielhuav/Flask-Compose-Login-
 
 ### Conceptos (con mis palabras)
 
-TODO: escribe 2 o 3 líneas por concepto, con tus palabras.
+Explicación de los conceptos clave del ejercicio 2.
 
 - **Docker:** Es una herramienta que mete mi aplicación con todo lo que necesita (Python, librerías, configuración) dentro de una caja aislada llamada contenedor. Así funciona igual en mi Mac que en la computadora del profesor, sin instalar nada más que Docker.
 - **Imagen y contenedor:** La imagen es la plantilla con la que se construye todo, como una receta ya terminada y que no cambia. El contenedor es esa receta ya corriendo. Si el contenedor se borra, se pierde lo que tenía adentro, por eso la base de datos se guarda en un volumen.
@@ -237,16 +237,26 @@ Como la API se consume por HTTP en desarrollo, el manifest declara `android:uses
 
 ## Conclusiones
 
-TODO: retos y logros con tus palabras. Ideas reales que te pasaron:
+**Logros**
 
-- El puerto 5000 ocupado por AirPlay en macOS.
-- `10.0.2.2` en lugar de `localhost` desde el emulador.
-- El error de JDK 25 con Gradle 8.13 en Android Studio.
-- Generar la llave JWT automáticamente para que el profe no configure nada.
+- Backend dockerizado que se levanta con un solo comando y sin configuración previa, porque la llave del JWT se genera sola y se guarda en un volumen.
+- Autenticación completa: contraseñas con bcrypt, sesiones con JWT que expira y endpoints que responden 401 sin sesión válida.
+- CRUD completo de tareas, aislado por usuario, y una app en Compose con menú lateral y estados de carga, error y sesión iniciada.
+
+**Retos y cómo se resolvieron**
+
+- **Puerto 5000 ocupado en macOS:** Docker marcaba `address already in use`. Con `lsof -i :5000` vi que lo usaba el Receptor de AirPlay y lo desactivé.
+- **JDK incompatible:** Android Studio traía Java 25 y Gradle 8.13 no lo soporta. Cambié el Gradle JDK a una versión 17 o 21.
+- **`localhost` desde el emulador:** dentro del emulador apunta al propio emulador, así que la app usa `10.0.2.2`. Además tuve que habilitar el tráfico HTTP en texto claro para desarrollo.
+- **`BuildConfig` sin resolver:** la clase se genera al compilar, así que hubo que compilar el proyecto después de activar `buildConfig` en Gradle.
+- **Archivos que no debían subirse:** la base de datos `site.db` del ejemplo y carpetas de Android Studio (`.idea/`, `.kotlin/`). Los quité y los agregué al `.gitignore`.
+- **Carpeta `Android` en macOS:** el sistema no distingue mayúsculas, así que no pude renombrarla a `android` y dejé la ruta original.
+
+**Aprendizaje:** entendí mejor la diferencia entre imagen y contenedor, por qué los datos deben vivir en un volumen y cómo un token firmado permite proteger la API sin guardar sesiones en el servidor. Como mejora futura, usaría HTTPS en lugar de HTTP.
 
 ## Bibliografía
 
-TODO: en formato APA. Base para completar:
+Fuentes consultadas (formato APA):
 
 - Docker Inc. (s. f.). *Docker documentation*. https://docs.docker.com
 - Pallets. (s. f.). *Flask documentation*. https://flask.palletsprojects.com
